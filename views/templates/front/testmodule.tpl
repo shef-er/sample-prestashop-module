@@ -1,0 +1,1 @@
+<p> It's output of frontend controller</p>
