@@ -55,7 +55,7 @@ class TestModule extends Module
             return false;
         }
 
-        //	Uninstall admin tab
+        // Uninstall admin tab
         if (!$this->uninstallTab('AdminTest'))
             return false;
 
@@ -161,7 +161,7 @@ class TestModule extends Module
         return array(
             'module-testmodule-test' => array(
                 'controller' => 'test',
-                /*'rule' =>       'news/{id}',
+                /*'rule' =>       'test/{id}',
                 'keywords' => array(
                     'id' => array('regexp' => '[0-9]+', 'param' => 'id'),
                 ),*/
