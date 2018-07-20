@@ -21,6 +21,7 @@ class TestModule extends Module
 
         $this->displayName = $this->l('Test module');
         $this->description = $this->l('Description of my module.');
+	    $this->controllers = Array('test', 'admintest');
 
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
     }
@@ -39,6 +40,9 @@ class TestModule extends Module
             return false;
         }
 
+        if	(!$this->installTab( 'AdminTest', 'AdminTest'))
+            return false;
+
         return true;
     }
 
@@ -50,6 +54,10 @@ class TestModule extends Module
         ) {
             return false;
         }
+
+        //	Uninstall admin tab
+        if (!$this->uninstallTab('AdminTest'))
+            return false;
 
         return true;
     }
@@ -72,7 +80,6 @@ class TestModule extends Module
             )
                 $output .= $this->displayError($this->l('Invalid Configuration value'));
             else {
-                //Configuration::updateValue('TESTMODULE_NAME', $test_module_name);
                 Configuration::updateValue('TESTMODULE_PRICE_FROM', $test_module_price_from);
                 Configuration::updateValue('TESTMODULE_PRICE_TO', $test_module_price_to);
                 $output .= $this->displayConfirmation($this->l('Settings updated'));
@@ -164,6 +171,30 @@ class TestModule extends Module
                 ),
             )
         );
+    }
+
+    public function installTab($class_name, $name)
+    {
+        $tab = new Tab();
+        $tab->id_parent	= 0;
+        $tab->name = array();
+        foreach	(Language::getLanguages(true) as $lang) {
+            $tab->name[$lang['id_lang']] = $name;
+        }
+        $tab->class_name = $class_name;
+        $tab->module = $this->name;
+        $tab->active = 1;
+        return $tab->add();
+    }
+
+    public function uninstallTab($class_name)
+    {
+        //	Retrieve Tab ID
+        $id_tab	= (int)Tab::getIdFromClassName($class_name);
+        //	Load tab
+        $tab = new Tab((int)$id_tab);
+        //	Delete it
+        return $tab->delete();
     }
 
 

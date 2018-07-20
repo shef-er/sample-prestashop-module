@@ -1,6 +1,6 @@
 <?php
 
-class TestModuleTestFrontController extends ModuleFrontController {
+class TestModuleTestModuleFrontController extends ModuleFrontController {
 
     public function initContent() {
         parent::initContent();
